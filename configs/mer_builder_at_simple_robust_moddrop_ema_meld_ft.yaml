@@ -1,0 +1,69 @@
+dataset:
+  name: MER_BUILDER_AT_MFCC80_ROBUST_MODDROP_EMA_MELD_FT
+  num_classes: 7
+  class_names:
+    - anger
+    - disgust
+    - fear
+    - joy
+    - neutral
+    - sadness
+    - surprise
+
+modalities: [A, T]
+
+data:
+  train_dir: data/features/mer_builder_at_simple/train
+  val_dir: data/features/mer_builder_at_simple/val
+  eval_dir: data/features/mer_builder_at_simple/testB
+  extensions: [".pkl", ".pickle"]
+  num_workers: 4
+  loader:
+    persistent_workers: true
+    prefetch_factor: 4
+  filter:
+    include_datasets_train: [MELD]
+    include_datasets_val: [MELD]
+
+model:
+  type: robust_at
+  input_dim_a: 160
+  input_dim_t: 768
+  hidden_dim: 256
+  num_layers: 4
+  num_heads: 8
+  ffn_mult: 4
+
+training:
+  device: auto
+  seed: 42
+  batch_size: 128
+  epochs: 30
+  learning_rate: 2.0e-4
+  weight_decay: 1.0e-4
+  optimizer: adamw
+  class_weights: balanced
+  label_smoothing: 0.1
+  grad_clip_norm: 1.0
+  amp: true
+  grad_accum_steps: 1
+  scheduler:
+    type: reduceonplateau
+    metric: uar
+    mode: max
+    factor: 0.5
+    patience: 2
+    min_lr: 1.0e-6
+  patience: 8
+  min_delta: 1.0e-4
+  augmentation:
+    modality_dropout_p: 0.1
+  ema:
+    enabled: true
+    decay: 0.999
+    use_for_eval: true
+  best_metric: UAR
+
+output:
+  root_dir: outputs
+

@@ -1,0 +1,81 @@
+dataset:
+  name: MER_BUILDER_AT_HF_E2E
+  num_classes: 7
+  class_names:
+    - anger
+    - disgust
+    - fear
+    - joy
+    - neutral
+    - sadness
+    - surprise
+
+modalities: [A, T]
+
+data:
+  processed_dir: mer_dataset_builder/data/processed
+  train_splits: [train, meld_train]
+  val_splits: [val, meld_dev]
+  eval_splits: [testB]
+  max_audio_sec: 10.0
+  text_max_tokens: 256
+  # MELD robustness: include speakers + short dialogue history (previous utterances only).
+  include_speaker_in_text: true
+  meld_context_window: 3
+  # For RoBERTa, a better separator token is </s> (BERT-style [SEP] isn't special in RoBERTa).
+  meld_context_sep: " </s> "
+  num_workers: 4
+  loader:
+    persistent_workers: true
+    prefetch_factor: 2
+  filter:
+    # Upweight MELD by filtering or sampling (choose one). This keeps all corpora by default.
+    # include_datasets_train: [MELD]
+    # include_datasets_val: [MELD]
+    include_datasets_eval: [MELD]
+
+model:
+  audio_model: microsoft/wavlm-base
+  text_model: roberta-base
+  pool_audio: mean_std     # mean | mean_std
+  pool_text: cls           # cls | mean
+  freeze_audio: false
+  freeze_text: false
+  hidden_dim: 256
+  num_layers: 4
+  num_heads: 8
+  ffn_mult: 4
+  modality_dropout_p: 0.1
+
+training:
+  device: auto
+  seed: 42
+  batch_size: 8
+  epochs: 20
+  learning_rate: 2.0e-4
+  lr_audio: 5.0e-5
+  lr_text: 5.0e-5
+  weight_decay: 1.0e-4
+  optimizer: adamw
+  class_weights: balanced
+  label_smoothing: 0.1
+  grad_clip_norm: 1.0
+  amp: true
+  grad_accum_steps: 4
+  scheduler:
+    type: reduceonplateau
+    metric: uar
+    mode: max
+    factor: 0.5
+    patience: 2
+    min_lr: 1.0e-6
+  patience: 6
+  min_delta: 1.0e-4
+  sampling:
+    type: weighted
+    dataset_weights:
+      MELD: 6.0
+  best_metric: UAR
+
+output:
+  root_dir: outputs
