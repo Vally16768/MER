@@ -1,0 +1,48 @@
+dataset:
+  name: MER_BUILDER_AT
+  num_classes: 7
+  class_names:
+  - anger
+  - disgust
+  - fear
+  - joy
+  - neutral
+  - sadness
+  - surprise
+modalities:
+- A
+- T
+data:
+  train_dir: data/features/mer_builder_at_simple/train
+  val_dir: data/features/mer_builder_at_simple/val
+  eval_dir: data/features/mer_builder_at_simple/testA
+  extensions:
+  - .pkl
+  - .pickle
+  num_workers: 4
+model:
+  input_dim_a: 80
+  input_dim_t: 768
+  gated_dim: 128
+  dropout: 0.1
+training:
+  device: auto
+  seed: 42
+  batch_size: 128
+  epochs: 30
+  learning_rate: 0.0001
+  weight_decay: 0.01
+  optimizer: adam
+  class_weights: balanced
+  patience: 5
+  best_metric: UAR
+output:
+  root_dir: C:\Users\E1554695\Desktop\projects\MER\outputs
+  run_name: run_1
+  run_dir: C:\Users\E1554695\Desktop\projects\MER\outputs\run_1
+meta:
+  resolved_at_utc: '2025-12-16T16:36:06.729413+00:00'
+  git_commit: 75ae4e44f743ee2c2eb9f03b53c24952b9c54292
+  config_path: C:\Users\E1554695\Desktop\projects\MER\outputs\run_1\config_resolved.yaml
+  cli_overrides:
+  - data.eval_dir=data/features/mer_builder_at_simple/testA

@@ -1,0 +1,86 @@
+dataset:
+  name: MER_BUILDER_AT_HF_E2E
+  num_classes: 7
+  class_names:
+  - anger
+  - disgust
+  - fear
+  - joy
+  - neutral
+  - sadness
+  - surprise
+modalities:
+- A
+- T
+data:
+  processed_dir: mer_dataset_builder/data/processed
+  train_splits:
+  - train
+  - meld_train
+  val_splits:
+  - val
+  - meld_dev
+  eval_splits:
+  - testB
+  max_audio_sec: 10.0
+  text_max_tokens: 256
+  include_speaker_in_text: true
+  meld_context_window: 3
+  meld_context_sep: ' </s> '
+  num_workers: 4
+  loader:
+    persistent_workers: true
+    prefetch_factor: 2
+  filter:
+    include_datasets_eval:
+    - MELD
+model:
+  audio_model: microsoft/wavlm-base
+  text_model: roberta-base
+  pool_audio: mean_std
+  pool_text: cls
+  freeze_audio: false
+  freeze_text: false
+  hidden_dim: 256
+  num_layers: 4
+  num_heads: 8
+  ffn_mult: 4
+  modality_dropout_p: 0.1
+training:
+  device: auto
+  seed: 42
+  batch_size: 8
+  epochs: 20
+  learning_rate: 0.0002
+  lr_audio: 5.0e-05
+  lr_text: 5.0e-05
+  weight_decay: 0.0001
+  optimizer: adamw
+  class_weights: balanced
+  label_smoothing: 0.1
+  grad_clip_norm: 1.0
+  amp: true
+  grad_accum_steps: 4
+  scheduler:
+    type: reduceonplateau
+    metric: uar
+    mode: max
+    factor: 0.5
+    patience: 2
+    min_lr: 1.0e-06
+  patience: 6
+  min_delta: 0.0001
+  sampling:
+    type: weighted
+    dataset_weights:
+      MELD: 6.0
+  best_metric: UAR
+output:
+  root_dir: C:\Users\E1554695\Desktop\projects\MER\outputs
+  run_name: run_hf_e2e_1
+  run_dir: C:\Users\E1554695\Desktop\projects\MER\outputs\run_hf_e2e_1
+meta:
+  resolved_at_utc: '2025-12-18T08:07:57.409227+00:00'
+  git_commit: 75ae4e44f743ee2c2eb9f03b53c24952b9c54292
+  config_path: C:\Users\E1554695\Desktop\projects\MER\configs\mer_builder_at_hf_e2e.yaml
+  cli_overrides: []

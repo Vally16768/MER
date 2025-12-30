@@ -1,0 +1,21 @@
+FlexibleATModel(
+  (norm_audio_in): LayerNorm((80,), eps=1e-05, elementwise_affine=True)
+  (norm_text_in): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  (fc_audio): Linear(in_features=80, out_features=80, bias=True)
+  (drop_audio): Dropout(p=0.1, inplace=False)
+  (fc_text): Linear(in_features=768, out_features=768, bias=True)
+  (drop_text): Dropout(p=0.1, inplace=False)
+  (gal_ta): GFL()
+  (norm_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (act_fused): SwiGLU(
+    (proj): Linear(in_features=128, out_features=256, bias=True)
+  )
+  (drop_fused): Dropout(p=0.1, inplace=False)
+  (classifier): Linear(in_features=128, out_features=7, bias=True)
+  (proj_audio): SwiGLU(
+    (proj): Linear(in_features=80, out_features=256, bias=True)
+  )
+  (proj_text): SwiGLU(
+    (proj): Linear(in_features=768, out_features=256, bias=True)
+  )
+)

@@ -1,0 +1,8 @@
+,anger,disgust,fear,joy,neutral,sadness,surprise
+anger,149,14,12,40,75,25,30
+disgust,18,11,0,3,23,7,6
+fear,5,1,11,4,18,8,3
+joy,33,9,4,223,97,10,26
+neutral,68,20,25,70,965,64,44
+sadness,15,3,7,18,86,67,12
+surprise,41,6,6,37,38,13,140
