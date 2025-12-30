@@ -1,0 +1,61 @@
+{
+  "dataset": "MER_BUILDER_AT_HF_E2E_ALL_STAGE2",
+  "modalities": [
+    "A",
+    "T"
+  ],
+  "num_classes": 7,
+  "num_samples": 180,
+  "metrics": {
+    "accuracy": 0.7666666666666667,
+    "macro_f1": 0.7532743315842726,
+    "weighted_f1": 0.7607137004696455,
+    "uar": 0.7579365079365079,
+    "per_class": {
+      "anger": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571
+      },
+      "disgust": {
+        "precision": 0.55,
+        "recall": 0.9166666666666666,
+        "f1": 0.6875
+      },
+      "fear": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8
+      },
+      "joy": {
+        "precision": 0.8260869565217391,
+        "recall": 0.7916666666666666,
+        "f1": 0.8085106382978723
+      },
+      "neutral": {
+        "precision": 0.8421052631578947,
+        "recall": 0.8888888888888888,
+        "f1": 0.8648648648648649
+      },
+      "sadness": {
+        "precision": 0.7142857142857143,
+        "recall": 0.625,
+        "f1": 0.6666666666666666
+      },
+      "surprise": {
+        "precision": 1.0,
+        "recall": 0.4166666666666667,
+        "f1": 0.5882352941176471
+      }
+    },
+    "support": {
+      "anger": 24,
+      "disgust": 24,
+      "fear": 24,
+      "joy": 24,
+      "neutral": 36,
+      "sadness": 24,
+      "surprise": 24
+    }
+  }
+}

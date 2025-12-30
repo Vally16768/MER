@@ -1,0 +1,61 @@
+{
+  "dataset": "MER_BUILDER_AT_HF_E2E_ALL_STAGE2",
+  "modalities": [
+    "A",
+    "T"
+  ],
+  "num_classes": 7,
+  "num_samples": 3500,
+  "metrics": {
+    "accuracy": 1.0,
+    "macro_f1": 0.7142857142857143,
+    "weighted_f1": 1.0,
+    "uar": 0.7142857142857143,
+    "per_class": {
+      "anger": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "disgust": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "fear": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "joy": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "neutral": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "sadness": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "surprise": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "support": {
+      "anger": 700,
+      "disgust": 0,
+      "fear": 0,
+      "joy": 700,
+      "neutral": 700,
+      "sadness": 700,
+      "surprise": 700
+    }
+  }
+}
