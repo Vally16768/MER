@@ -1,0 +1,41 @@
+dataset:
+  name: IEMOCAP
+  num_classes: 3
+modalities:
+- A
+data:
+  train_dir: tmp_synth_at/train
+  val_dir: tmp_synth_at/val
+  eval_dir: PATH/TO/IEMOCAP/features/test
+  num_workers: 0
+model:
+  input_dim_a: 512
+  input_dim_t: 768
+  gated_dim: 16
+  dropout: 0.1
+training:
+  device: cpu
+  seed: 42
+  batch_size: 4
+  epochs: 1
+  learning_rate: 1e-4
+  weight_decay: 1e-2
+  optimizer: adam
+  patience: 20
+  best_metric: UAR
+output:
+  root_dir: C:\Users\E1554695\Desktop\projects\MER\outputs
+  run_name: synth2_A
+  run_dir: C:\Users\E1554695\Desktop\projects\MER\outputs\synth2_A
+meta:
+  resolved_at_utc: '2025-12-14T13:35:30.036714+00:00'
+  git_commit: 75ae4e44f743ee2c2eb9f03b53c24952b9c54292
+  config_path: C:\Users\E1554695\Desktop\projects\MER\configs\iemocap_A.yaml
+  cli_overrides:
+  - dataset.num_classes=3
+  - data.train_dir=tmp_synth_at/train
+  - data.val_dir=tmp_synth_at/val
+  - training.device=cpu
+  - training.epochs=1
+  - training.batch_size=4
+  - model.gated_dim=16

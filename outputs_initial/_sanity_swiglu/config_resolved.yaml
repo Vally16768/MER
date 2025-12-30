@@ -1,0 +1,62 @@
+dataset:
+  name: MER_BUILDER_AT
+  num_classes: 7
+  class_names:
+  - anger
+  - disgust
+  - fear
+  - joy
+  - neutral
+  - sadness
+  - surprise
+modalities:
+- A
+- T
+data:
+  train_dir: data/features/_tmp_feat_test/train
+  val_dir: data/features/_tmp_feat_test/train
+  eval_dir: data/features/mer_builder_at_simple/testB
+  extensions:
+  - .pkl
+  - .pickle
+  num_workers: 0
+model:
+  input_dim_a: 80
+  input_dim_t: 768
+  gated_dim: 128
+  dropout: 0.1
+training:
+  device: cpu
+  seed: 42
+  batch_size: 4
+  epochs: 5
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: adamw
+  class_weights: balanced
+  grad_clip_norm: 1.0
+  scheduler:
+    type: reduceonplateau
+    metric: uar
+    mode: max
+    factor: 0.5
+    patience: 2
+    min_lr: 1.0e-06
+  patience: 8
+  min_delta: 0.0001
+  best_metric: UAR
+output:
+  root_dir: C:\Users\E1554695\Desktop\projects\MER\outputs
+  run_name: _sanity_swiglu
+  run_dir: C:\Users\E1554695\Desktop\projects\MER\outputs\_sanity_swiglu
+meta:
+  resolved_at_utc: '2025-12-16T12:05:20.848659+00:00'
+  git_commit: 75ae4e44f743ee2c2eb9f03b53c24952b9c54292
+  config_path: C:\Users\E1554695\Desktop\projects\MER\configs\mer_builder_at_simple.yaml
+  cli_overrides:
+  - data.train_dir=data/features/_tmp_feat_test/train
+  - data.val_dir=data/features/_tmp_feat_test/train
+  - training.device=cpu
+  - training.batch_size=4
+  - training.epochs=5
+  - data.num_workers=0

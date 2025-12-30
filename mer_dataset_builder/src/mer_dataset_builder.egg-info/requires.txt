@@ -1,0 +1,6 @@
+numpy>=1.23
+tqdm>=4.66
+pypdf>=5.0
+
+[dev]
+pytest>=7.0
