@@ -170,7 +170,4 @@ dmypy.json
 # Custom
 *.pth
 
-# Experiment outputs
-data/
-
 *.pt
