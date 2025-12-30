@@ -1,0 +1,98 @@
+dataset:
+  name: IEMOCAP4_HF_E2E_CV
+  num_classes: 4
+  class_names:
+  - anger
+  - joy
+  - sadness
+  - neutral
+  drop_unknown_labels: true
+modalities:
+- A
+- T
+data:
+  processed_dir: mer_dataset_builder/data/processed
+  train_splits:
+  - train
+  - val
+  - test
+  val_splits:
+  - train
+  - val
+  - test
+  eval_splits:
+  - train
+  - val
+  - test
+  max_audio_sec: 12.0
+  text_max_tokens: 256
+  include_speaker_in_text: false
+  meld_context_window: 0
+  meld_context_sep: ' </s> '
+  num_workers: 4
+  loader:
+    persistent_workers: true
+    prefetch_factor: 2
+  filter:
+    include_datasets_train:
+    - IEMOCAP
+    include_datasets_val:
+    - IEMOCAP
+    include_datasets_eval:
+    - IEMOCAP
+    exclude_speaker_regex_train: Ses03
+    include_speaker_regex_val: Ses03
+    include_speaker_regex_eval: Ses03
+model:
+  audio_model: microsoft/wavlm-base
+  text_model: roberta-base
+  pool_audio: mean_std
+  pool_text: cls
+  freeze_audio: false
+  freeze_text: false
+  freeze_audio_feature_encoder: true
+  hidden_dim: 256
+  num_layers: 4
+  num_heads: 8
+  ffn_mult: 4
+  modality_dropout_p: 0.0
+training:
+  device: auto
+  seed: 2
+  batch_size: 8
+  epochs: 12
+  learning_rate: 0.0001
+  lr_audio: 2.0e-05
+  lr_text: 2.0e-05
+  weight_decay: 0.0001
+  optimizer: adamw
+  class_weights: balanced
+  label_smoothing: 0.1
+  grad_clip_norm: 1.0
+  amp: true
+  grad_accum_steps: 4
+  scheduler:
+    type: reduceonplateau
+    metric: uar
+    mode: max
+    factor: 0.5
+    patience: 2
+    min_lr: 1.0e-06
+  patience: 4
+  min_delta: 0.0001
+  best_metric: weighted_f1
+output:
+  root_dir: C:\Users\E1554695\Desktop\projects\MER\outputs_paper
+  run_name: paper_iemocap4_seed2_fold3_AT
+  run_dir: C:\Users\E1554695\Desktop\projects\MER\outputs_paper\paper_iemocap4_seed2_fold3_AT
+meta:
+  resolved_at_utc: '2025-12-25T03:05:25.235605+00:00'
+  git_commit: 75ae4e44f743ee2c2eb9f03b53c24952b9c54292
+  config_path: C:\Users\E1554695\Desktop\projects\MER\configs\mer_builder_at_hf_e2e_iemocap4_cv.yaml
+  cli_overrides:
+  - output.root_dir=outputs_paper
+  - data.num_workers=4
+  - training.seed=2
+  - data.filter.exclude_speaker_regex_train=Ses03
+  - data.filter.include_speaker_regex_val=Ses03
+  - data.filter.include_speaker_regex_eval=Ses03

@@ -173,3 +173,6 @@ dmypy.json
 # Experiment outputs
 outputs/
 data/
+*.pt
+best*
+last*
