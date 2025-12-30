@@ -1,0 +1,70 @@
+dataset:
+  name: MER_BUILDER_AT_MFCC80_ROBUST_MODDROP
+  num_classes: 7
+  class_names:
+  - anger
+  - disgust
+  - fear
+  - joy
+  - neutral
+  - sadness
+  - surprise
+modalities:
+- A
+- T
+data:
+  train_dir: data/features/mer_builder_at_simple/train
+  val_dir: data/features/mer_builder_at_simple/val
+  eval_dir: data/features/mer_builder_at_simple/testB
+  extensions:
+  - .pkl
+  - .pickle
+  num_workers: 4
+  loader:
+    persistent_workers: true
+    prefetch_factor: 4
+model:
+  type: robust_at
+  input_dim_a: 160
+  input_dim_t: 768
+  hidden_dim: 256
+  num_layers: 4
+  num_heads: 8
+  ffn_mult: 4
+training:
+  device: auto
+  seed: 42
+  batch_size: 128
+  epochs: 80
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  optimizer: adamw
+  class_weights: balanced
+  label_smoothing: 0.1
+  grad_clip_norm: 1.0
+  scheduler:
+    type: reduceonplateau
+    metric: uar
+    mode: max
+    factor: 0.5
+    patience: 2
+    min_lr: 1.0e-06
+  patience: 10
+  min_delta: 0.0001
+  sampling:
+    type: weighted
+    dataset_weights:
+      MELD: 4.0
+  augmentation:
+    modality_dropout_p: 0.2
+  best_metric: UAR
+output:
+  root_dir: C:\Users\E1554695\Desktop\projects\MER\outputs
+  run_name: exp4_robust_moddrop
+  run_dir: C:\Users\E1554695\Desktop\projects\MER\outputs\exp4_robust_moddrop\eval_testB
+meta:
+  resolved_at_utc: '2025-12-16T21:34:49.512086+00:00'
+  git_commit: 75ae4e44f743ee2c2eb9f03b53c24952b9c54292
+  config_path: C:\Users\E1554695\Desktop\projects\MER\outputs\exp4_robust_moddrop\config_resolved.yaml
+  cli_overrides:
+  - data.eval_dir=data/features/mer_builder_at_simple/testB

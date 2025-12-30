@@ -1,0 +1,17 @@
+/.venv/
+/dist/
+/build/
+/*.egg-info/
+__pycache__/
+.pytest_cache/
+
+# Large raw datasets placed next to the repo
+/IEMOCAP_full_release/
+
+# Data outputs (keep directory skeleton via .gitkeep)
+/data/raw/*
+!/data/raw/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+!/data/processed/audio/.gitkeep
+!/data/processed/stats/.gitkeep

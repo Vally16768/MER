@@ -1,0 +1,53 @@
+dataset:
+  name: MER_BUILDER_AT_MFCC80
+  num_classes: 7
+  class_names:
+    - anger
+    - disgust
+    - fear
+    - joy
+    - neutral
+    - sadness
+    - surprise
+
+modalities: [A, T]
+
+data:
+  train_dir: data/features/mer_builder_at_simple/train
+  val_dir: data/features/mer_builder_at_simple/val
+  eval_dir: data/features/mer_builder_at_simple/testB
+  extensions: [".pkl", ".pickle"]
+  num_workers: 4
+  loader:
+    persistent_workers: true
+    prefetch_factor: 4
+
+model:
+  input_dim_a: 160  # MFCC mean+std (2 * n_mfcc), for n_mfcc=80
+  input_dim_t: 768  # hashing text vector
+  gated_dim: 128
+  dropout: 0.0
+
+training:
+  device: auto
+  seed: 42
+  batch_size: 128
+  epochs: 200
+  learning_rate: 1.0e-3
+  weight_decay: 1.0e-4
+  optimizer: adamw
+  class_weights: balanced
+  grad_clip_norm: 1.0
+  scheduler:
+    type: reduceonplateau
+    metric: uar
+    mode: max
+    factor: 0.5
+    patience: 2
+    min_lr: 1.0e-6
+  patience: 8
+  min_delta: 1.0e-4
+  best_metric: UAR
+
+output:
+  root_dir: outputs
